@@ -35,6 +35,30 @@ const animals = [
   }
 ];
 
+const team = [
+  {
+    id: 1,
+    name: 'Анна Петрова',
+    role: 'Главный ветеринар',
+    image: 'https://cdn.poehali.dev/projects/bacde58b-53bd-4a99-9f16-e96826e698c1/files/f1ceb48f-0574-43f1-9e48-bb1440aba33d.jpg',
+    description: '15 лет опыта в ветеринарии. Специализируется на хирургии и реабилитации животных.'
+  },
+  {
+    id: 2,
+    name: 'Дмитрий Соколов',
+    role: 'Координатор приюта',
+    image: 'https://cdn.poehali.dev/projects/bacde58b-53bd-4a99-9f16-e96826e698c1/files/4fd9a562-4250-47d1-8acb-2ccbc2c458df.jpg',
+    description: 'Организует спасательные операции и управляет повседневной работой приюта.'
+  },
+  {
+    id: 3,
+    name: 'Елена Иванова',
+    role: 'Руководитель волонтёров',
+    image: 'https://cdn.poehali.dev/projects/bacde58b-53bd-4a99-9f16-e96826e698c1/files/d2463660-d7c3-4762-b6f5-a6ab93813762.jpg',
+    description: 'Координирует работу волонтёров и помогает животным найти новые дома.'
+  }
+];
+
 const Index = () => {
   const [selectedAnimal, setSelectedAnimal] = useState<number | null>(null);
   const [donationAmount, setDonationAmount] = useState('');
@@ -43,14 +67,18 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-peach via-white to-softGreen">
       <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-primary/10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Icon name="Heart" size={28} className="text-primary" />
-            <span className="text-2xl font-bold text-primary">ДобрыеЛапки</span>
+          <div className="flex items-center gap-3">
+            <img 
+              src="https://cdn.poehali.dev/files/logoza.ru (1).png" 
+              alt="Добрые лапки" 
+              className="h-12 w-auto"
+            />
           </div>
           <div className="hidden md:flex gap-6">
             <a href="#home" className="text-foreground hover:text-primary transition-colors">Главная</a>
             <a href="#animals" className="text-foreground hover:text-primary transition-colors">Наши питомцы</a>
             <a href="#mission" className="text-foreground hover:text-primary transition-colors">О миссии</a>
+            <a href="#team" className="text-foreground hover:text-primary transition-colors">Команда</a>
             <a href="#donate" className="text-foreground hover:text-primary transition-colors">Помочь</a>
             <a href="#contact" className="text-foreground hover:text-primary transition-colors">Контакты</a>
           </div>
@@ -59,9 +87,19 @@ const Index = () => {
 
       <section id="home" className="pt-32 pb-20 px-4">
         <div className="container mx-auto text-center animate-fade-in">
+          <div className="mb-8">
+            <img 
+              src="https://cdn.poehali.dev/files/logoza.ru (1).png" 
+              alt="Добрые лапки" 
+              className="h-24 mx-auto mb-6"
+            />
+          </div>
           <h1 className="text-5xl md:text-7xl font-bold text-primary mb-6">
             Каждая жизнь важна
           </h1>
+          <p className="text-2xl md:text-3xl font-medium text-foreground mb-4 italic">
+            Помоги тем кто не может попросить
+          </p>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
             Мы спасаем бездомных животных, лечим их и помогаем найти любящие семьи
           </p>
@@ -205,6 +243,42 @@ const Index = () => {
         </div>
       </section>
 
+      <section id="team" className="py-20 px-4 bg-white">
+        <div className="container mx-auto">
+          <div className="text-center mb-12 animate-fade-in">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
+              Наша команда
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Профессионалы, которые посвятили свою жизнь спасению животных
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {team.map((member, index) => (
+              <Card 
+                key={member.id}
+                className="border-none shadow-lg hover:shadow-2xl transition-all duration-300 animate-scale-in rounded-3xl overflow-hidden"
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
+                <div className="relative overflow-hidden aspect-square">
+                  <img 
+                    src={member.image} 
+                    alt={member.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <CardContent className="p-6 text-center">
+                  <h3 className="text-2xl font-bold text-foreground mb-2">{member.name}</h3>
+                  <p className="text-primary font-medium mb-3">{member.role}</p>
+                  <p className="text-muted-foreground text-sm">{member.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section id="donate" className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12 animate-fade-in">
@@ -341,10 +415,16 @@ const Index = () => {
 
       <footer className="bg-primary text-white py-12 px-4">
         <div className="container mx-auto text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Icon name="Heart" size={32} />
-            <span className="text-3xl font-bold">ДобрыеЛапки</span>
+          <div className="flex items-center justify-center mb-4">
+            <img 
+              src="https://cdn.poehali.dev/files/logoza.ru (1).png" 
+              alt="Добрые лапки" 
+              className="h-16 brightness-0 invert"
+            />
           </div>
+          <p className="text-white/80 mb-2 text-lg italic">
+            Помоги тем кто не может попросить
+          </p>
           <p className="text-white/80 mb-6">
             Вместе мы делаем мир добрее для животных
           </p>
